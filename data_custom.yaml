@@ -1,0 +1,8 @@
+train: C:\Users\Acer\python\train
+
+val: C:\Users\Acer\python\val
+
+
+nc: 3
+
+names: ["hat","face","jacket"]
