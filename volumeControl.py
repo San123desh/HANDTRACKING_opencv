@@ -57,16 +57,20 @@ while True:
         # Calculate the length between thumb and index finger
         length = math.hypot(x2 - x1, y2 - y1)
 
+        # Adjust the range for easier volume control
+        minDistance = 30  # Minimum distance between thumb and index finger
+        maxDistance = 200
+
         # Map the length to volume range
-        vol = np.interp(length, [50, 300], [minVol, maxVol])
-        volBar = np.interp(length, [50, 300], [400, 150])
-        volPer = np.interp(length, [50, 300], [0, 100])
+        vol = np.interp(length, [minDistance, maxDistance], [minVol, maxVol])
+        volBar = np.interp(length, [minDistance, maxDistance], [400, 150])
+        volPer = np.interp(length, [minDistance, maxDistance], [0, 100])
 
         # Set the volume
         volume.SetMasterVolumeLevel(vol, None)
 
         # Change color if volume is at minimum level
-        if length < 50:
+        if length < minDistance:
             cv2.circle(img, (cx, cy), 15, (0, 255, 0), cv2.FILLED)
 
     # Draw volume bar

@@ -9,6 +9,10 @@ mp_draw = mp.solutions.drawing_utils
 
 cap = cv2.VideoCapture(0)
 
+pTime = 0
+cTime = 0
+
+
 while True:
     success, img = cap.read()
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -17,11 +21,12 @@ while True:
     if results.multi_hand_landmarks:
         for handLms in results.multi_hand_landmarks:
             mp_draw.draw_landmarks(img, handLms, mp_hands.HAND_CONNECTIONS)
-            # for id, lm in enumerate(handLms.landmark):
-            #     h, w, c = img.shape
-            #     cx, cy = int(lm.x * w), int(lm.y * h)
-            #     if id == 4:
-            #         cv2.circle(img, (cx, cy), 15, (255, 0, 255), cv2.FILLED)
+            for id, lm in enumerate(handLms.landmark):
+                h, w, c = img.shape
+                cx, cy = int(lm.x * w), int(lm.y * h)
+                print(id, cx, cy)
+                if id == 4:
+                    cv2.circle(img, (cx, cy), 15, (255, 0, 255), cv2.FILLED)
             #         cv2.putText(img, str(id), (cx - 20, cy - 20), cv2.FONT_HERSHEY_PLAIN, 1, (255, 0, 255), 2)
             #         if id == 4:
             #             print(id)
