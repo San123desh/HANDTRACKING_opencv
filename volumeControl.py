@@ -33,6 +33,7 @@ maxVol = volRange[1]
 vol = 0
 volBar = 400
 volPer = 0
+setVolume = False
 
 while True:
     success, img = cap.read()
@@ -67,11 +68,14 @@ while True:
         volPer = np.interp(length, [minDistance, maxDistance], [0, 100])
 
         # Set the volume
-        volume.SetMasterVolumeLevel(vol, None)
+        # volume.SetMasterVolumeLevel(vol, None)
 
         # Change color if volume is at minimum level
         if length < minDistance:
             cv2.circle(img, (cx, cy), 15, (0, 255, 0), cv2.FILLED)
+
+        if setVolume:
+            volume.SetMasterVolumeLevel(vol, None)
 
     # Draw volume bar
     cv2.rectangle(img, (50, 150), (85, 400), (0, 255, 0), 3)
@@ -86,8 +90,13 @@ while True:
 
     # Display the image
     cv2.imshow("Img", img)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    # if cv2.waitKey(1) & 0xFF == ord('q'):
+    #     break
+    key = cv2.waitKey(1)
+    if key & 0xFF == ord('q'):
         break
+    elif key & 0xFF == ord('s'):
+        setVolume = True 
 
 # Release resources
 cap.release()
