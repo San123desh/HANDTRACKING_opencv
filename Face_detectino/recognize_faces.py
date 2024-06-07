@@ -17,7 +17,9 @@ process_this_frame = True
 
 # Create or load the attendance log
 attendance_file = 'attendance.csv'
-if not os.path.exists(attendance_file):
+
+
+if not os.path.exists(attendance_file) or os.stat(attendance_file).st_size == 0:
     df = pd.DataFrame(columns=['Name', 'Time'])
     df.to_csv(attendance_file, index=False)
 else:
@@ -58,8 +60,9 @@ while True:
                 now = datetime.now()
                 current_time = now.strftime("%Y-%m-%d %H:%M:%S")
                 if not ((df['Name'] == name) & (df['Time'].str[:10] == current_time[:10])).any():
-                    new_entry = {'Name': name, 'Time': current_time}
-                    df = df.append(new_entry, ignore_index=True)
+                    new_entry = pd.DataFrame({'Name': [name], 'Time': [current_time]})
+                    df = pd.concat([df, new_entry], ignore_index=True)
+
                     df.to_csv(attendance_file, index=False)
 
     process_this_frame = not process_this_frame

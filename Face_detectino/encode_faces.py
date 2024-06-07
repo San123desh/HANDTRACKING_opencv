@@ -10,15 +10,19 @@ known_face_names = []
 # Loop through each person in the known_faces directory
 for name in os.listdir(known_faces_dir):
     person_dir = os.path.join(known_faces_dir, name)
+    print(f"Processing {name}'s images...") 
     for filename in os.listdir(person_dir):
         image_path = os.path.join(person_dir, filename)
+        print(f"Encoding {filename}...") 
         image = face_recognition.load_image_file(image_path)
         encodings = face_recognition.face_encodings(image)
         if encodings:
             encoding = encodings[0]
             known_face_encodings.append(encoding)
             known_face_names.append(name)
-
+        else:
+            print(f"No face found in {filename}") 
 # Save the encodings
 np.save('known_face_encodings.npy', known_face_encodings)
 np.save('known_face_names.npy', known_face_names)
+print(f"Encodings saved. {len(known_face_encodings)} faces encoded.") 
