@@ -3,6 +3,7 @@ import face_recognition
 import numpy as np
 import pandas as pd
 from datetime import datetime
+import os
 
 # Load known face encodings and names
 known_face_encodings = np.load('known_face_encodings.npy', allow_pickle=True)
