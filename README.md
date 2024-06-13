@@ -26,6 +26,9 @@ This project demonstrates real-time hand tracking using OpenCV and MediaPipe. It
 * https://github.com/AndreMiras/pycaw
 
 
+- pip install pyautogui(mouse control)
+
+
 ## Usage
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
